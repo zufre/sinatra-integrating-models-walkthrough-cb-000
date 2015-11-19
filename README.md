@@ -67,8 +67,6 @@ class TextAnalyzer
   end
 
 end
-
-end
 ```
 The model above has an initializer which takes in a string `text` and saves it to an instance variable `@text`. This instance variable is then used in the four instance methods, which provide information on the block of text in question. If we wanted to use this class on its own, we could do the following:
 
