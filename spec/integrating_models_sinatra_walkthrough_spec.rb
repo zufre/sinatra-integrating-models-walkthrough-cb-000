@@ -15,16 +15,31 @@ describe App do
   end
 
   describe 'POST /' do
-   it "displays string results" do 
-    visit '/'
+    it "displays string results" do 
+      visit '/'
 
-    fill_in(:user_text, :with => "Green Eggs and Ham")
-    click_button "submit"
-    expect(page).to have_text("Number of Words:4")
-    expect(page).to have_text("Number of Words: 4")
+      fill_in(:user_text, :with => "Green Eggs and Ham")
+      click_button "submit"
+      expect(page).to have_text("Number of Words:4")
+      expect(page).to have_text("Vowels:5")
+      expect(page).to have_text("Consonants:10")
+      expect(page).to have_text("Most Common Letter: G, used 3 times")
+    end
   end
 
-  
+  describe 'TextAnalyzer Class' do 
+      let!(:words) { TextAnalyzer.new("mirror mirror on the wall") }
+
+    it 'can initialize a new instance of the class' do
+      expect(TextAnalyzer.new("hey yall").to be_an_instance_of(song))
+    end
+
+    it 'can have text' do 
+      it "can have a name" do
+        expect(song.text).to eq("mirror mirror on the wall")
+      end
+    end
 
   end
+
 end
