@@ -48,7 +48,7 @@ class TextAnalyzer
     @text.scan(/[bcdfghjklmnpqrstvwxyz]/).count
   end
 
-  def most_used_letter
+def most_used_letter
     s1 = @text.downcase.gsub(/[^a-z]/, '') #gets rid of spaces
     arr = s1.split('')
     arr1 = arr.uniq
@@ -56,11 +56,18 @@ class TextAnalyzer
     arr1.map do |c| 
      arr2[c] =  arr.count(c)
     end
-    biggest = { arr2.keys.first  => arr2.values.first }
+    biggest = { 
+      :most_used_letter  => arr2.keys.first,
+      :letter_count => arr2.values.first 
+    }
     arr2.each do |key, value|
-      if value > biggest.values.first
-        biggest = {}
-        biggest[key] = value
+      if value > biggest.values[1]
+        biggest = {
+          :most_used_letter => "",
+          :letter_count => ""
+        }
+        biggest[:most_used_letter] = key
+        biggest[:letter_count] = value
       end
     end
     biggest
@@ -68,7 +75,7 @@ class TextAnalyzer
 
 end
 
-end
+
 ```
 The model above has an initializer which takes in a string `text` and saves it to an instance variable `@text`. This instance variable is then used in the four instance methods, which provide information on the block of text in question. If we wanted to use this class on its own, we could do the following:
 
