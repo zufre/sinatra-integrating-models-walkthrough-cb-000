@@ -1,6 +1,4 @@
-
 # Integrating Models Sinatra Walkthrough
-
 
 ## Overview
 In previous lessons, we've applied logic to data provided by the user directly in our application controller. While this works, it does not follow the principle of 'separation of concerns' - our files should do one thing and one thing only. In this code-along lesson, we'll learn how to move the logic to a model in a Sinatra application. By doing this, we'll create our first full Model-View-Controller application in Sinatra. We'll use input from a form to create an instance of a model, and then send that instance back to a view to be displayed to the user. As an example, we're going to create a web application that analyzes a block of text from the user - showing the number of words, most common letters, and least common letters used.
@@ -17,12 +15,6 @@ To code along, fork and clone this lab. Run `bundle install` to make sure all of
 
 ### Starter Code
 Let's take a closer look at the starter code. Run `shotgun` to make sure that your application can run.
-
-#### Views
-+ `layout.erb` - this is some Sinatra magic. A `layout.erb` file allows us to template out a shell for all pages in the application, so that we don't have to add the same starter content for each page (`<!doctype HTML>`, links to stylesheets, etc.). The `<%=yield%>` tag in this file yields to whatever erb page the controller is rendering.
-+ `index.erb` has a form that has one text input tag: `<textarea name="user_text"> `. Remember that the name attribute becomes the key for the form data in the `params` hash. The form has a method attribute of `POST`, and an action attribute of `/`.
-+ `results.erb` which will show the results of analyzing the user's text block.
-+ **Note:** The views all have basic CSS styling using [Bootstrap](http://getbootstrap.com/) (linked using the `<link`> tag) that can be found in `bootstrap.css` in the `public/stylesheets` folder.
 
 #### Routes
 + The controller has two routes:
@@ -56,16 +48,34 @@ class TextAnalyzer
     @text.scan(/[bcdfghjklmnpqrstvwxyz]/).count
   end
 
-  def most_used_letter
-    s1 = @text.downcase.gsub(/[^a-z]/, '')
+def most_used_letter
+    s1 = @text.downcase.gsub(/[^a-z]/, '') #gets rid of spaces
     arr = s1.split('')
     arr1 = arr.uniq
-    arr2 = arr1.map { |c| [c, arr.count(c)] }
-    arr2.max_by { |c, count| count }
-    #returns an array with most used letter and count, e.g. ["e", 5]
+    arr2 = {}
+    arr1.map do |c| 
+     arr2[c] =  arr.count(c)
+    end
+    biggest = { 
+      :most_used_letter  => arr2.keys.first,
+      :letter_count => arr2.values.first 
+    }
+    arr2.each do |key, value|
+      if value > biggest.values[1]
+        biggest = {
+          :most_used_letter => "",
+          :letter_count => ""
+        }
+        biggest[:most_used_letter] = key
+        biggest[:letter_count] = value
+      end
+    end
+    biggest
   end
 
 end
+
+
 ```
 The model above has an initializer which takes in a string `text` and saves it to an instance variable `@text`. This instance variable is then used in the four instance methods, which provide information on the block of text in question. If we wanted to use this class on its own, we could do the following:
 
@@ -104,19 +114,9 @@ We now have the instance of `TextAnalyzer` saved to an instance variable called 
 
 ## Using Instance Variables in ERB
 
-We've practiced this before. In our `results.erb` file, use erb tags to display the data stored in the `@analyzed_text` variable:
+We've practiced this before. In our `results.erb` file, use erb tags to display the data stored in the `@analyzed_text` variable. Your end result should look something like this:
 
-```html
-<h1> Your Text Analysis </h1>
-
-<h2>Number of Words:<%= @analyzed_text.count_of_words %></h2>
-
-<h2>Vowels:<%= @analyzed_text.count_of_vowels %></h2>
-
-<h2>Consonants:<%= @analyzed_text.count_of_consonants %></h2>
-
-<h2>Most Common Letter: <%= @analyzed_text.most_used_letter[0].upcase %>, used <%= @analyzed_text.most_used_letter[1] %> times</h2>
-```
+<img src="https://s3.amazonaws.com/learn-verified/text-analyzer.png">
 
 ## Full MVC
 Congratulations! You've now created your first Sinatra app that uses a model, views, and a controller! You are taking user input in a form, sending it via params to the 'post' route where a new instance of the model is created using the data from the form. This instance is passed back to the view, where it is rendered using erb tags. Pat yourself on the back, this is a big milestone in your developer journey!
