@@ -13,7 +13,7 @@ In previous lessons, we've applied logic to data provided by the user directly i
 
 ## Setup
 
-We'll use input from a form to create an instance of a model, and then send that instance back to a view to be displayed to the user. As an example, we're going to create a web application that analyzes a block of text from the user - showing the number of words, most common letters, and least common letters us
+We'll use input from a form to create an instance of a model, and then send that instance back to a view to be displayed to the user. As an example, we're going to create a web application that analyzes a block of text from the user - showing the number of words, most common letters, and least common letters to us.
 
 To code along, fork and clone this lab. Run `bundle install` to make sure all of your dependencies are installed. 
 
@@ -128,3 +128,5 @@ In our `results.erb` file, use erb tags to display the data stored in the `@anal
 Congratulations! You've now created your first Sinatra app that uses a model, views, and a controller! You are taking user input in a form, sending it via params to the 'post' route where a new instance of the model is created using the data from the form. This instance is passed back to the view, where it is rendered using erb tags. Pat yourself on the back, this is a big milestone in your developer journey!
 
 <a href='https://learn.co/lessons/integrating-models-sinatra-walkthrough' data-visibility='hidden'>View this lesson on Learn.co</a>
+
+<p data-visibility='hidden'>View <a href='https://learn.co/lessons/sinatra-integrating-models-walkthrough'>Integrating Models for a Full MVC</a> on Learn.co and start learning to code for free.</p>
