@@ -34,6 +34,7 @@ We're not going to go deeply into creating models in this lesson, as you've cove
 ```ruby
 
 class TextAnalyzer
+  attr_accessor :text
 
   def initialize(text)
     @text = text
