@@ -41,8 +41,7 @@ class TextAnalyzer
   end
 
   def count_of_words
-    words = @text.split(" ")
-    words.count
+    @text.split(" ").count
   end
 
   def count_of_vowels
@@ -54,28 +53,19 @@ class TextAnalyzer
   end
 
 def most_used_letter
-    s1 = @text.downcase.gsub(/[^a-z]/, '') #gets rid of spaces
-    arr = s1.split('')
-    arr1 = arr.uniq
-    arr2 = {}
-    arr1.map do |c| 
-     arr2[c] =  arr.count(c)
-    end
-    biggest = { 
-      :most_used_letter  => arr2.keys.first,
-      :letter_count => arr2.values.first 
-    }
-    arr2.each do |key, value|
-      if value > biggest.values[1]
-        biggest = {
-          :most_used_letter => "",
-          :letter_count => ""
-        }
-        biggest[:most_used_letter] = key
-        biggest[:letter_count] = value
+    all_letters_in_string = @text.downcase.gsub(/[^a-z]/, '').split('') #gets rid of spaces and turns it into an array
+    letters_to_compare = all_letters_in_string.uniq
+    most_used_letter = ""
+    letter_count = 0
+
+    letters_to_compare.map do |letter|
+      letter_repetitions = all_letters_in_string.count(letter)
+      if letter_repetitions > letter_count
+        letter_count = letter_repetitions
+        most_used_letter = letter
       end
     end
-    biggest
+    biggest = [most_used_letter, letter_count]
   end
 
 end
@@ -88,7 +78,7 @@ The model above has an initializer which takes in a string `text` and saves it t
 my_text = TextAnalyzer.new("The rain in Spain stays mainly on the plain.")
 my_text.count_of_words #=> 9
 my_text.count_of_vowels #=> 13
-my_text.count_of_consonants #=> 20
+my_text.count_of_consonants #=> 22
 my_text.most_used_letter #=> ["n", 6]
 
 ```
@@ -131,3 +121,5 @@ Congratulations! You've now created your first Sinatra app that uses a model, vi
 <a href='https://learn.co/lessons/integrating-models-sinatra-walkthrough' data-visibility='hidden'>View this lesson on Learn.co</a>
 
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/sinatra-integrating-models-walkthrough'>Integrating Models for a Full MVC</a> on Learn.co and start learning to code for free.</p>
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/sinatra-integrating-models-walkthrough'>Integrating Models for a Full MVC</a> on Learn.co and start learning to code for free.</p>
