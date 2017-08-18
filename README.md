@@ -23,7 +23,7 @@ Let's take a closer look at the starter code. Run `shotgun` to make sure that yo
 #### Routes
 + The controller has two routes:
 	+  `get '/' do`, which renders the `index.erb` page.
-	+  `post '/results' do`, which receives the form data through params and renders the results page.
+	+  `post '/' do`, which receives the form data through params and renders the results page.
 
 ## Creating a Model
 
