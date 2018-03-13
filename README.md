@@ -72,18 +72,19 @@ end
 ```
 
 The model above has an initializer which takes in a string `text`, converts it to lowercase, and saves it to an instance variable `@text`. This instance variable is then used in the four instance methods, which provide information on the block of text in question. If we wanted to use this class on its own, we could do the following:
+
 ```ruby
 my_text = TextAnalyzer.new("The rain in Spain stays mainly on the plain.")
 my_text.count_of_words #=> 9
 my_text.count_of_vowels #=> 13
 my_text.count_of_consonants #=> 22
-my_text.most_used_letter #=> ["n", 6]
+my_text.most_used_letter #=> {"n" => 6}
 ```
 
 In general our models are agnostic about the rest of our application - we could drop this class into a Command Line or Ruby on Rails app and it would function in the exact same way.
 
 ## Using a model in the controller
-In order to use the model we've created in our controller we need to connect the two. To do this, we'll use the `require_relative` keyword to bring in the code from the model we've created. At the top of `app.rb`, add `require_relative "models/textanalyzer.rb"`. This now gives us the ability to create new instances of the TextAnalyzer class from within our controller.
+In order to use the model we've created in our controller we need to connect the two. To do this, we'll use the `require_relative` keyword to bring in the code from the model we've created. At the top of `app.rb`, add `require_relative "models/text_analyzer.rb"`. This now gives us the ability to create new instances of the TextAnalyzer class from within our controller.
 
 Now, let's take the data from `params[user_text]` (in the `post '/' do` route) and feed it into a new instance of the`TextAnalyzer` class:
 ```ruby
